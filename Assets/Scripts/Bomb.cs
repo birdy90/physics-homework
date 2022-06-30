@@ -7,18 +7,21 @@ public class Bomb : MonoBehaviour
     public float ExplosionMultiplier = 200f;
     public float ExplosionRadius = 6f;
 
-    public ParticleSystem _particleSystem;
+    public bool UseLayer = true;
+    public int LayerNumber = 6; // layer for bricks
+    public ParticleSystem ParticleSystem;
 
     private float _timeout = 2f;
     private bool _exploded = false;
 
     void Start()
     {
-        Debug.Log(Physics.gravity);
-        
         _affectedObjects = new List<GameObject>();
         var colliders = new Collider[100];
-        var length = Physics.OverlapSphereNonAlloc(Vector3.zero, ExplosionRadius, colliders, 1 << 6);
+
+        var length = UseLayer 
+            ? Physics.OverlapSphereNonAlloc(Vector3.zero, ExplosionRadius, colliders, 1 << 6) 
+            : Physics.OverlapSphereNonAlloc(Vector3.zero, ExplosionRadius, colliders);
 
         for (var i = 0; i < length; i++)
         {
@@ -37,16 +40,18 @@ public class Bomb : MonoBehaviour
 
     void Explode()
     {
-        _exploded = true;
         foreach (var brick in _affectedObjects)
         {
             var vector = brick.transform.position - transform.position;
             var body = brick.GetComponent<Rigidbody>();
+            if (!body) continue;
             var forceToApply = vector.normalized * ExplosionMultiplier / Mathf.Pow(vector.magnitude, 2);
             body.AddForce(forceToApply);
-            gameObject.SetActive(false);
-            _particleSystem.Play();
         }
+        
+        _exploded = true;
+        gameObject.SetActive(false);
+        ParticleSystem.Play();
     }
 
     private void OnDrawGizmos()

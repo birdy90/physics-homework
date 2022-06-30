@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Explosion.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Pool.unity
+    guid: 8482a53c68fe26ffdaa0fc999197acc6
+  - enabled: 1
+    path: Assets/Scenes/Superman.unity
+    guid: 8707a980c5c183ce2acef3a0f2e0a0a8
+  - enabled: 1
+    path: Assets/Scenes/NoGravity.unity
+    guid: 89440db8f7cce05638cb302414d851ce
+  - enabled: 1
+    path: Assets/Scenes/NoGravityTube.unity
+    guid: 93d41e412c09c848ba9220463963784f
   m_configObjects: {}
